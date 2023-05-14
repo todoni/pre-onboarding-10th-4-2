@@ -17,6 +17,7 @@ const apiRequest = {
   get: (url: string) => baseInstance.get(url),
   delete: (url: string) => baseInstance.delete(url),
   post: (url: string, data: TodoItemType) => baseInstance.post(url, data),
+  suggest: (url: string) => baseInstance.get(url)
 };
 
 export default apiRequest;

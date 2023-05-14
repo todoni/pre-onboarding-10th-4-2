@@ -33,18 +33,26 @@ body {
   width: 100%;
   margin-bottom: 20px;
   display: flex;
-  border-radius: calc(0.5 * 100px);
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.38);
+  height: 47px;
   justify-content: space-evenly;
+  position: relative;
+  border: 1px solid #DEDEDE;
+  border-radius: 6px;
+}
+
+.form-container:focus-within {
+  border: 1px solid #9F9F9F;
+}
+
+.form-container:hover {
+  border: 3px solid #DEDEDE;
 }
 
 .input-text {
   font-size: 1rem;
   font-weight: 400;
   width: 85%;
-  padding-right: 5px;
-  padding-left: 10px;
-  border-radius: calc(0.5 * 100px);
+  padding: 12px 13px;
   background-color: transparent;
 }
 
@@ -148,4 +156,22 @@ body {
   width: 100%;
   padding: 10px;
   border: 1px solid #dfdfdf;
+}
+
+.search-icon {
+  font-size: 20px;
+  color: #7D7D7D;
+  position: absolute;
+  top: 12px;
+  left: 13px;
+}
+
+.suggestion-wrapper {
+  position: absolute;
+  background: #FFFFFF;
+  width: 100%;
+  top: 50px;
+  border: 1px solid #DEDEDE;
+  box-shadow: 0px 0px 1px rgba(50, 50, 50, 0.05), 0px 2px 4px rgba(50, 50, 50, 0.1);
+  border-radius: 5px;
 }
