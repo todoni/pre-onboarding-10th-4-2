@@ -1,6 +1,7 @@
+import { TodoListProps } from "../types/todo";
 import TodoItem from "./TodoItem";
 
-const TodoList = ({ todos, setTodos }) => {
+const TodoList = ({ todos, setTodos }: TodoListProps) => {
   return todos.length ? (
     <ul>
       {todos.map(({ id, title }) => (

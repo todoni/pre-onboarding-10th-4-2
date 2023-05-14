@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TodoItemType } from "../types/todo";
 
 const baseURL = process.env.REACT_APP_API_URL;
 const token = process.env.REACT_APP_TOKEN;
@@ -13,9 +14,9 @@ const baseInstance = axios.create({
 baseInstance.interceptors.response.use(({ data }) => data);
 
 const apiRequest = {
-  get: (url, request) => baseInstance.get(url, request),
-  delete: (url, request) => baseInstance.delete(url, request),
-  post: (url, data, config) => baseInstance.post(url, data, config),
+  get: (url: string) => baseInstance.get(url),
+  delete: (url: string) => baseInstance.delete(url),
+  post: (url: string, data: TodoItemType) => baseInstance.post(url, data),
 };
 
 export default apiRequest;
