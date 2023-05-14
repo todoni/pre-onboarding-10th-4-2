@@ -1,17 +1,27 @@
 // import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 // import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { createTodo } from "../api/todo";
 import useFocus from "../hooks/useFocus";
 import { InputTodoProps } from "../types/todo";
-import { TodoSuggestList } from "./TodoSuggestList";
+import { SuggestList } from "./SuggestList";
+import { SuggestParams } from "../types/suggest";
+import { getSuggestList } from "../api/suggest";
+import { SHOW_LIMIT, SHOW_PAGE } from "../constants";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestList, setSuggestList] = useState<string[]>([]);
   const { ref, setFocus } = useFocus();
+  const paramObj: SuggestParams = {
+    q: '',
+    page: SHOW_PAGE,
+    limit: SHOW_LIMIT
+  };
+  const params = useRef(paramObj);
 
   useEffect(() => {
     setFocus();
@@ -45,6 +55,31 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     [inputText, setTodos],
   );
 
+  const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { value } = target;
+
+    params.current.q = value;
+    setInputText(value);
+    if (value.trim() === '') {
+      setSuggestList([]);
+      return;
+    }
+    /* eslint-disable */
+    console.log(value);
+
+    const getSuggestions = async () => {
+      const res = await getSuggestList(params.current);
+      /* eslint-disable */
+      console.log(res.data.result);
+      setSuggestList(res.data.result);
+    }
+    getSuggestions();
+  };
+
+  const handleSuggestionClick = () => {
+
+  }
+
   return (
     <form className="form-container" onSubmit={handleSubmit}>
       <BiSearch className="search-icon" />
@@ -53,7 +88,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         placeholder="Add new todo..."
         ref={ref}
         value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
+        onChange={onChangeHandler}
         disabled={isLoading}
       />
       {/* {!isLoading ? (
@@ -63,7 +98,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
       ) : (
         <FaSpinner className="spinner" />
       )} */}
-      <TodoSuggestList />
+      <SuggestList suggestList={suggestList} />
     </form>
   );
 };

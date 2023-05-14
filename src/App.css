@@ -30,10 +30,10 @@ body {
 }
 
 .form-container {
-  width: 100%;
+  width: 364px;
   margin-bottom: 20px;
   display: flex;
-  height: 47px;
+  height: 44px;
   justify-content: space-evenly;
   position: relative;
   border: 1px solid #DEDEDE;
@@ -169,8 +169,8 @@ body {
 .suggestion-wrapper {
   position: absolute;
   background: #FFFFFF;
-  width: 100%;
   top: 50px;
+  height: 164px;
   border: 1px solid #DEDEDE;
   box-shadow: 0px 0px 1px rgba(50, 50, 50, 0.05), 0px 2px 4px rgba(50, 50, 50, 0.1);
   border-radius: 5px;
