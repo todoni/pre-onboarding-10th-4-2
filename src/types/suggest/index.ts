@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type SuggestParams = {
   q: string,
   page: number,
@@ -16,4 +18,6 @@ export type SuggestListProps = {
 
 export type SuggestItemProps = {
   text: string
-}
+};
+
+export type SetSuggestType = Dispatch<SetStateAction<string[]>>;
