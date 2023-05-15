@@ -1,30 +1,26 @@
-import { ChangeEvent, useRef } from "react";
-import { INPUT_DELAY_TIME, SHOW_LIMIT, SHOW_PAGE } from "../constants";
-import { SuggestParams, UseSearchArgs } from "../types/suggest";
+import { ChangeEvent } from "react";
+import { INITIAL_PAGE, INPUT_DELAY_TIME } from "../constants";
+import { UseSearchArgs } from "../types/hook";
 import { useDebounce } from "./useDebounce";
 import { getSuggestList } from "../api/suggest";
-
-const paramObj: SuggestParams = {
-  q: "",
-  page: SHOW_PAGE,
-  limit: SHOW_LIMIT,
-};
 
 const useSearch = ({
   setInputText,
   setIsLoading,
   setIsTyping,
-  setSuggestList
+  setSuggestList,
+  params,
+  isMore
 }: UseSearchArgs) => {
-  const params = useRef(paramObj);
+  
   const debounce = useDebounce(INPUT_DELAY_TIME);
-  const isMore = useRef<boolean>(false);
 
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
 
     setIsTyping(true);
     params.current.q = value;
+    params.current.page = INITIAL_PAGE;
     setInputText(value);
     if (value.trim() === "") {
       setSuggestList([]);
@@ -35,14 +31,13 @@ const useSearch = ({
 
     const getSuggestions = async () => {
       try {
+        if (params.current.q === '') return;
         setIsLoading(true);
-        params.current.page = newPage;
         const res = await getSuggestList(params.current);
-        /* eslint-disable */
-        console.log(res.data.result);
         const { page, limit, total, result } = res.data;
-        setSuggestList(result);
+
         isMore.current = page * limit < total;
+        setSuggestList(result);
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
@@ -53,11 +48,7 @@ const useSearch = ({
     debounce(getSuggestions);
   };
 
-  const onScrollHandler = () => {
-    
-  }
-
-  return { onChangeHandler, isMore };
+  return onChangeHandler;
 };
 
 export default useSearch;

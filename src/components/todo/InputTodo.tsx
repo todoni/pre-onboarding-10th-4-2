@@ -1,4 +1,3 @@
-// import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
@@ -8,13 +7,19 @@ import { SuggestList } from "../suggest/SuggestList";
 import useSearch from "../../hooks/useSearch";
 import usePost from "../../hooks/usePost";
 import { blurInput } from "../../utils";
+import { PARAM_OBJ } from "../../constants";
+import useScroll from "../../hooks/useScroll";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestList, setSuggestList] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+
   const formRef = useRef<HTMLFormElement>(null);
+  const params = useRef(PARAM_OBJ);
+  const isMore = useRef<boolean>(false);
 
   const { ref, setFocus } = useFocus();
   const postArgs = {
@@ -24,19 +29,28 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     setIsTyping,
     inputText,
     ref,
-    formRef
+    formRef,
   };
   const searchArgs = {
     setIsLoading,
     setInputText,
     setIsTyping,
-    setSuggestList
-  }
-  const { onChangeHandler, isMore } = useSearch(searchArgs);
+    setSuggestList,
+    params,
+    isMore,
+  };
+  const scrollArgs = {
+    params,
+    isMore,
+    setSuggestList,
+    setIsScrolling,
+  };
+  const handleChange = useSearch(searchArgs);
   const { handleSubmit, handleItemClick } = usePost(postArgs);
+  const handleScroll = useScroll(scrollArgs);
 
   const handleBlur = ({ target }: Event) => {
-    if ((target as HTMLElement).matches('.input-text')) return;
+    if ((target as HTMLElement).matches(".input-text")) return;
     setIsTyping(false);
     ref.current!.blur();
     blurInput(ref, formRef);
@@ -44,7 +58,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
 
   useEffect(() => {
     setFocus();
-    document.addEventListener('click', handleBlur);
+    document.addEventListener("click", handleBlur);
   }, [setFocus]);
 
   return (
@@ -56,12 +70,21 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
           placeholder="Add new todo..."
           ref={ref}
           value={inputText}
-          onChange={onChangeHandler}
+          onChange={handleChange}
           disabled={isLoading}
         />
       </div>
       {isLoading && <ImSpinner8 className="spinner" />}
-      {isTyping && <SuggestList suggestList={suggestList} clickHandler={handleItemClick} inputText={inputText} isMore={isMore.current} />}
+      {isTyping && (
+        <SuggestList
+          suggestList={suggestList}
+          clickHandler={handleItemClick}
+          inputText={inputText}
+          isMore={isMore}
+          scrollHandler={handleScroll}
+          isScrolling={isScrolling}
+        />
+      )}
     </form>
   );
 };

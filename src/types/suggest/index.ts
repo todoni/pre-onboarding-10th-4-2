@@ -1,5 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction } from "react";
-import { FormRef, InputRef, SetStringType, SetTodosType } from "../todo";
+import { Dispatch, MouseEvent, MutableRefObject, SetStateAction, UIEvent } from "react";
 
 export type SuggestParams = {
   q: string,
@@ -14,12 +13,18 @@ export interface SuggestItemFetchType extends SuggestParams {
 };
 
 type SuggestItemClickHandler = (e: MouseEvent<HTMLElement>) => void;
+type SuggestListScrollHandler = (e: UIEvent<HTMLElement>) => void;
+
+export type ParamRef = MutableRefObject<SuggestParams>;
+export type IsMoreRef = MutableRefObject<boolean>;
 
 export type SuggestListProps = {
   suggestList: string[],
   clickHandler: SuggestItemClickHandler,
   inputText: string,
-  isMore: boolean
+  isMore: IsMoreRef,
+  scrollHandler: SuggestListScrollHandler,
+  isScrolling: boolean
 };
 
 export type SuggestItemProps = {
@@ -30,20 +35,3 @@ export type SuggestItemProps = {
 
 export type SetSuggestType = Dispatch<SetStateAction<string[]>>;
 export type SetBooleanType = Dispatch<SetStateAction<boolean>>;
-
-export type UsePostArgs = {
-  setIsLoading: SetBooleanType,
-  setTodos: SetTodosType,
-  setInputText: SetStringType,
-  setIsTyping: SetBooleanType,
-  inputText: string,
-  ref: InputRef,
-  formRef: FormRef
-};
-
-export type UseSearchArgs = {
-  setSuggestList: SetSuggestType,
-  setInputText: SetStringType,
-  setIsTyping: SetBooleanType,
-  setIsLoading: SetBooleanType
-};

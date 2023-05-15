@@ -1,5 +1,5 @@
 import { FormEvent, MouseEvent, useCallback } from "react";
-import { UsePostArgs } from "../types/suggest";
+import { UsePostArgs } from "../types/hook";
 import { createTodo } from "../api/todo";
 import { blurInput } from "../utils";
 
