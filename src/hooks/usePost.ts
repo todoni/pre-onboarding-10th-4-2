@@ -41,8 +41,6 @@ const usePost = ({
     async (e: MouseEvent<HTMLElement>) => {
       try {
         setIsLoading(true);
-        /* eslint-disable */
-        console.log('hi')
 
         const suggestion = (e.target as HTMLElement).textContent!;
 
