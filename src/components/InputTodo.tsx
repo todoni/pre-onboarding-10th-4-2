@@ -8,6 +8,7 @@ import useFocus from "../hooks/useFocus";
 import { InputTodoProps } from "../types/todo";
 import { SuggestList } from "./SuggestList";
 import useSearch from "../hooks/useSearch";
+// import useToggle from "../utils/useToggle";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
@@ -16,7 +17,6 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [isTyping, setIsTyping] = useState(false);
   const { ref, setFocus } = useFocus();
   const handleSearch = useSearch(setSuggestList, setInputText, setIsTyping);
-  
 
   useEffect(() => {
     setFocus();
@@ -46,6 +46,8 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     [inputText, setTodos],
   );
 
+  const onBlurHandler = () => setIsTyping(false);
+
   // const handleSuggestionClick = (e: MouseEvent<HTMLButtonElement>) => {
   //   setInputText('');
   // };
@@ -59,6 +61,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         ref={ref}
         value={inputText}
         onChange={handleSearch}
+        onBlur={onBlurHandler}
         disabled={isLoading}
       />
       {/* {!isLoading ? (

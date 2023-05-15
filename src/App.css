@@ -133,6 +133,13 @@ body {
   background-color: #eaeaea;
 }
 
+.item span {
+  display: inline-block;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .item-option {
   float: right;
 }
