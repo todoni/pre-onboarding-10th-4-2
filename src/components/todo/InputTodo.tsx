@@ -1,7 +1,7 @@
 // import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { FocusEvent, useEffect, useRef, useState } from "react";
 import useFocus from "../../hooks/useFocus";
 import { InputTodoProps } from "../../types/todo";
 import { SuggestList } from "../suggest/SuggestList";
@@ -15,9 +15,9 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestList, setSuggestList] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const { ref, setFocus } = useFocus();
-  const handleSearch = useSearch(setSuggestList, setInputText, setIsTyping);
   const debounce = useDebounce(CLICK_DELAY_TIME);
   const postArgs = {
     setIsLoading,
@@ -26,17 +26,29 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     setIsTyping,
     inputText
   };
-
+  const searchArgs = {
+    setIsLoading,
+    setInputText,
+    setIsTyping,
+    setSuggestList
+  }
+  const handleSearch = useSearch(searchArgs);
   const { handleSubmit, handleItemClick } = usePost(postArgs);
 
   useEffect(() => {
     setFocus();
   }, [setFocus]);
 
-  const onBlurHandler = () => debounce(setIsTyping.bind(null, false));
+  const onBlurHandler = ({ target }: FocusEvent<HTMLInputElement>) => {
+    const { scrollWidth, clientWidth } = target;
+    if (scrollWidth > clientWidth) 
+      formRef.current!.style.boxShadow = '0px 4px 4px rgba(0, 0, 0, 0.25)';
+    else formRef.current!.style.boxShadow = 'none';
+    debounce(setIsTyping.bind(null, false));
+  }
 
   return (
-    <form className="form-container" onSubmit={handleSubmit}>
+    <form className="form-container" onSubmit={handleSubmit} ref={formRef}>
       <BiSearch className="search-icon" />
       <div className="input-container">
         <input

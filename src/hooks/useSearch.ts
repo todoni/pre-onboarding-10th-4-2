@@ -1,17 +1,21 @@
 import { ChangeEvent, useRef } from "react";
 import { INPUT_DELAY_TIME, SHOW_LIMIT, SHOW_PAGE } from "../constants";
-import { SetBooleanType, SetSuggestType, SuggestParams } from "../types/suggest";
+import { SuggestParams, UseSearchArgs } from "../types/suggest";
 import { useDebounce } from "./useDebounce";
 import { getSuggestList } from "../api/suggest";
-import { SetStringType } from "../types/todo";
 
 const paramObj: SuggestParams = {
-  q: '',
+  q: "",
   page: SHOW_PAGE,
-  limit: SHOW_LIMIT
+  limit: SHOW_LIMIT,
 };
 
-const useSearch = (setSuggestList: SetSuggestType, setInputText: SetStringType, setIsTyping: SetBooleanType) => {
+const useSearch = ({
+  setInputText,
+  setIsLoading,
+  setIsTyping,
+  setSuggestList
+}: UseSearchArgs) => {
   const params = useRef(paramObj);
   const debounce = useDebounce(INPUT_DELAY_TIME);
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +24,7 @@ const useSearch = (setSuggestList: SetSuggestType, setInputText: SetStringType, 
     setIsTyping(true);
     params.current.q = value;
     setInputText(value);
-    if (value.trim() === '') {
+    if (value.trim() === "") {
       setSuggestList([]);
       return;
     }
@@ -28,11 +32,21 @@ const useSearch = (setSuggestList: SetSuggestType, setInputText: SetStringType, 
     console.log(value);
 
     const getSuggestions = async () => {
-      const res = await getSuggestList(params.current);
-      /* eslint-disable */
-      console.log(res.data.result);
-      setSuggestList(res.data.result);
-    }
+      try {
+        const res = await getSuggestList(params.current);
+        setIsLoading(true);
+        /* eslint-disable */
+        console.log(res.data.result);
+        setSuggestList(res.data.result);
+      } catch (error) {
+        console.error(error);
+        alert("Something went wrong.");
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 100);
+      }
+    };
     debounce(getSuggestions);
   };
 

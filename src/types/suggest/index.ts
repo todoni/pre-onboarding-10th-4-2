@@ -34,4 +34,11 @@ export type UsePostArgs = {
   setInputText: SetStringType,
   setIsTyping: SetBooleanType,
   inputText: string
+};
+
+export type UseSearchArgs = {
+  setSuggestList: SetSuggestType,
+  setInputText: SetStringType,
+  setIsTyping: SetBooleanType,
+  setIsLoading: SetBooleanType
 }
