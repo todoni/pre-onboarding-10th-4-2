@@ -18,6 +18,8 @@ const useSearch = ({
 }: UseSearchArgs) => {
   const params = useRef(paramObj);
   const debounce = useDebounce(INPUT_DELAY_TIME);
+  const isMore = useRef<boolean>(false);
+
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
 
@@ -34,10 +36,13 @@ const useSearch = ({
     const getSuggestions = async () => {
       try {
         setIsLoading(true);
+        params.current.page = newPage;
         const res = await getSuggestList(params.current);
         /* eslint-disable */
         console.log(res.data.result);
-        setSuggestList(res.data.result);
+        const { page, limit, total, result } = res.data;
+        setSuggestList(result);
+        isMore.current = page * limit < total;
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
@@ -48,7 +53,11 @@ const useSearch = ({
     debounce(getSuggestions);
   };
 
-  return onChangeHandler;
+  const onScrollHandler = () => {
+    
+  }
+
+  return { onChangeHandler, isMore };
 };
 
 export default useSearch;

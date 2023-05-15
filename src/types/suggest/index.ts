@@ -18,7 +18,8 @@ type SuggestItemClickHandler = (e: MouseEvent<HTMLElement>) => void;
 export type SuggestListProps = {
   suggestList: string[],
   clickHandler: SuggestItemClickHandler,
-  inputText: string
+  inputText: string,
+  isMore: boolean
 };
 
 export type SuggestItemProps = {

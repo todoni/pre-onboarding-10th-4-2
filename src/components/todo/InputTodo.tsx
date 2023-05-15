@@ -7,7 +7,7 @@ import { InputTodoProps } from "../../types/todo";
 import { SuggestList } from "../suggest/SuggestList";
 import useSearch from "../../hooks/useSearch";
 import usePost from "../../hooks/usePost";
-import blurInput from "../../utils/blurInput";
+import { blurInput } from "../../utils";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
@@ -32,7 +32,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     setIsTyping,
     setSuggestList
   }
-  const handleSearch = useSearch(searchArgs);
+  const { onChangeHandler, isMore } = useSearch(searchArgs);
   const { handleSubmit, handleItemClick } = usePost(postArgs);
 
   const handleBlur = ({ target }: Event) => {
@@ -56,12 +56,12 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
           placeholder="Add new todo..."
           ref={ref}
           value={inputText}
-          onChange={handleSearch}
+          onChange={onChangeHandler}
           disabled={isLoading}
         />
       </div>
       {isLoading && <ImSpinner8 className="spinner" />}
-      {isTyping && <SuggestList suggestList={suggestList} clickHandler={handleItemClick} inputText={inputText} />}
+      {isTyping && <SuggestList suggestList={suggestList} clickHandler={handleItemClick} inputText={inputText} isMore={isMore.current} />}
     </form>
   );
 };

@@ -190,3 +190,12 @@ body {
   font-size: 20px;
   color: #7D7D7D;
 }
+
+.more-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #9F9F9F;
+  margin-bottom: 10px;
+}

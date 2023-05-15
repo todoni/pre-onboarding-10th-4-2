@@ -1,7 +1,7 @@
 import { FormEvent, MouseEvent, useCallback } from "react";
 import { UsePostArgs } from "../types/suggest";
 import { createTodo } from "../api/todo";
-import blurInput from "../utils/blurInput";
+import { blurInput } from "../utils";
 
 const usePost = ({
   setIsLoading,
