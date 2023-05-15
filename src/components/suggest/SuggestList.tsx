@@ -4,13 +4,6 @@ import { SuggestListProps } from "../../types/suggest";
 import { SuggestItem } from "./SuggestItem";
 
 export const SuggestList = ({ suggestList, clickHandler }: SuggestListProps) => {
-  // const suggestNoneStyle = {
-  //   height: "100%",
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // };
-
   return (
     <ul className="suggestion-wrapper">
       {suggestList.length === 0 && <p className="suggest-none">추천 검색어 없음</p>}

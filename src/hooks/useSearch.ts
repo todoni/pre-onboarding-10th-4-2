@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef } from "react";
-import { SHOW_LIMIT, SHOW_PAGE } from "../constants";
+import { INPUT_DELAY_TIME, SHOW_LIMIT, SHOW_PAGE } from "../constants";
 import { SetBooleanType, SetSuggestType, SuggestParams } from "../types/suggest";
 import { useDebounce } from "./useDebounce";
 import { getSuggestList } from "../api/suggest";
@@ -13,7 +13,7 @@ const paramObj: SuggestParams = {
 
 const useSearch = (setSuggestList: SetSuggestType, setInputText: SetStringType, setIsTyping: SetBooleanType) => {
   const params = useRef(paramObj);
-  const debounce = useDebounce();
+  const debounce = useDebounce(INPUT_DELAY_TIME);
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
 

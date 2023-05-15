@@ -1,4 +1,5 @@
 import { Dispatch, MouseEvent, SetStateAction } from "react";
+import { SetStringType, SetTodosType } from "../todo";
 
 export type SuggestParams = {
   q: string,
@@ -26,3 +27,11 @@ export type SuggestItemProps = {
 
 export type SetSuggestType = Dispatch<SetStateAction<string[]>>;
 export type SetBooleanType = Dispatch<SetStateAction<boolean>>;
+
+export type UsePostArgs = {
+  setIsLoading: SetBooleanType,
+  setTodos: SetTodosType,
+  setInputText: SetStringType,
+  setIsTyping: SetBooleanType,
+  inputText: string
+}

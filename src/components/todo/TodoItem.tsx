@@ -1,5 +1,5 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
-import { useCallback, useState } from "react";
+import { MouseEvent, useCallback, useState } from "react";
 
 import { deleteTodo } from "../../api/todo";
 import { TodoItemProps } from "../../types/todo";
@@ -21,8 +21,12 @@ const TodoItem = ({ id, title, setTodos }: TodoItemProps) => {
     }
   }, [id, setTodos]);
 
+  const clickHandler = (e: MouseEvent<HTMLElement>) => {
+    if (!(e.target as HTMLElement).closest('.item-option')) alert(title);
+  };
+
   return (
-    <li className="item">
+    <li className="item" onClick={clickHandler}>
       <span>{title}</span>
       <div className="item-option">
         {!isLoading ? (

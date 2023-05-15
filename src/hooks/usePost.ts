@@ -1,14 +1,14 @@
 import { FormEvent, MouseEvent, useCallback } from "react";
-import { SetBooleanType } from "../types/suggest";
-import { SetStringType, SetTodosType } from "../types/todo";
+import { UsePostArgs } from "../types/suggest";
 import { createTodo } from "../api/todo";
 
-const usePost = (
-  setIsLoading: SetBooleanType,
-  setInputText: SetStringType,
-  setTodos: SetTodosType,
-  inputText: string
-) => {
+const usePost = ({
+  setIsLoading,
+  setInputText,
+  setIsTyping,
+  setTodos,
+  inputText
+}: UsePostArgs) => {
   const handleSubmit = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       try {
@@ -26,7 +26,8 @@ const usePost = (
         console.error(error);
         alert("Something went wrong.");
       } finally {
-        setInputText("");
+        setInputText('');
+        setIsTyping(false);
         setIsLoading(false);
       }
     },
@@ -37,6 +38,8 @@ const usePost = (
     async (e: MouseEvent<HTMLElement>) => {
       try {
         setIsLoading(true);
+        /* eslint-disable */
+        console.log('hi')
 
         const suggestion = (e.target as HTMLElement).textContent!;
 
