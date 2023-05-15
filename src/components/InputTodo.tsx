@@ -13,8 +13,9 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestList, setSuggestList] = useState<string[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
   const { ref, setFocus } = useFocus();
-  const handleSearch = useSearch(setSuggestList, setInputText);
+  const handleSearch = useSearch(setSuggestList, setInputText, setIsTyping);
   
 
   useEffect(() => {
@@ -45,11 +46,9 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     [inputText, setTodos],
   );
 
-  
-
-  const handleSuggestionClick = () => {
-    
-  }
+  // const handleSuggestionClick = (e: MouseEvent<HTMLButtonElement>) => {
+  //   setInputText('');
+  // };
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
@@ -69,7 +68,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
       ) : (
         <FaSpinner className="spinner" />
       )} */}
-      <SuggestList suggestList={suggestList} />
+      {isTyping && <SuggestList suggestList={suggestList} />}
     </form>
   );
 };

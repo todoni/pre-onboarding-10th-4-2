@@ -21,3 +21,4 @@ export type SuggestItemProps = {
 };
 
 export type SetSuggestType = Dispatch<SetStateAction<string[]>>;
+export type SetIsTypingType = Dispatch<SetStateAction<boolean>>;

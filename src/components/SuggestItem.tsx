@@ -3,6 +3,6 @@ import { SuggestItemProps } from '../types/suggest'
 
 export const SuggestItem = ({ text }: SuggestItemProps) => {
   return (
-    <button>{text}</button>
+    <li className='suggest-item'>{text}</li>
   );
 };

@@ -7,6 +7,10 @@
   padding: 0;
 }
 
+ul {
+  list-style: none;
+}
+
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   line-height: 1.4;
@@ -31,6 +35,7 @@ body {
 
 .form-container {
   width: 364px;
+  margin: 0 auto;
   margin-bottom: 20px;
   display: flex;
   height: 44px;
@@ -116,10 +121,12 @@ body {
 
 .item {
   list-style-type: none;
+  width: 364px;
   padding: 17px 1.5rem;
   border-bottom: 1px solid #eaeaea;
   font-size: 1.2rem;
   letter-spacing: 1.5px;
+  margin: 0 auto;
 }
 .item:hover {
   opacity: 0.85;
@@ -168,10 +175,23 @@ body {
 
 .suggestion-wrapper {
   position: absolute;
+  width: 364px;
   background: #FFFFFF;
   top: 50px;
   height: 164px;
   border: 1px solid #DEDEDE;
   box-shadow: 0px 0px 1px rgba(50, 50, 50, 0.05), 0px 2px 4px rgba(50, 50, 50, 0.1);
   border-radius: 5px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
+
+.suggest-item {
+  width: 354px;
+  height: 28px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+};

@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from "react";
 import { SHOW_LIMIT, SHOW_PAGE } from "../constants";
-import { SetSuggestType, SuggestParams } from "../types/suggest";
+import { SetIsTypingType, SetSuggestType, SuggestParams } from "../types/suggest";
 import { useDebounce } from "./useDebounce";
 import { getSuggestList } from "../api/suggest";
 import { SetInputType } from "../types/todo";
@@ -11,12 +11,13 @@ const paramObj: SuggestParams = {
   limit: SHOW_LIMIT
 };
 
-const useSearch = (setSuggestList: SetSuggestType, setInputText: SetInputType) => {
+const useSearch = (setSuggestList: SetSuggestType, setInputText: SetInputType, setIsTyping: SetIsTypingType) => {
   const params = useRef(paramObj);
   const debounce = useDebounce();
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
 
+    setIsTyping(true);
     params.current.q = value;
     setInputText(value);
     if (value.trim() === '') {
