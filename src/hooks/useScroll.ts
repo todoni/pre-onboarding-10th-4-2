@@ -19,19 +19,22 @@ const useScroll = ({
 
     const getSuggestions = async () => {
       try {
+        if (params.current.q === '') return;
+
         setIsScrolling(true);
         params.current.page = params.current.page + 1;
 
         const res = await getSuggestList(params.current);
         const { page, limit, total, result } = res.data;
-        isMore.current = page * limit < total;
 
+        isMore.current = page * limit < total;
         setSuggestList(prev => [...prev, ...result]);
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
       } finally {
         setIsScrolling(false);
+        if (params.current.q === '') setSuggestList([]);
       }
     };
     throttle(getSuggestions);

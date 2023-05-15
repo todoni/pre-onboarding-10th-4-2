@@ -32,7 +32,9 @@ const useSearch = ({
     const getSuggestions = async () => {
       try {
         if (params.current.q === '') return;
+
         setIsLoading(true);
+        
         const res = await getSuggestList(params.current);
         const { page, limit, total, result } = res.data;
 
