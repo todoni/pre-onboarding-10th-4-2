@@ -3,7 +3,7 @@ import "./SuggestList.css";
 import { SuggestListProps } from "../../types/suggest";
 import { SuggestItem } from "./SuggestItem";
 
-export const SuggestList = ({ suggestList }: SuggestListProps) => {
+export const SuggestList = ({ suggestList, clickHandler }: SuggestListProps) => {
   // const suggestNoneStyle = {
   //   height: "100%",
   //   display: "flex",
@@ -15,7 +15,7 @@ export const SuggestList = ({ suggestList }: SuggestListProps) => {
     <ul className="suggestion-wrapper">
       {suggestList.length === 0 && <p className="suggest-none">추천 검색어 없음</p>}
       {suggestList.map((item, index) => (
-        <SuggestItem key={index} text={item} />
+        <SuggestItem key={index} text={item} clickHandler={clickHandler} />
       ))}
     </ul>
   );

@@ -1,9 +1,9 @@
 import { ChangeEvent, useRef } from "react";
 import { SHOW_LIMIT, SHOW_PAGE } from "../constants";
-import { SetIsTypingType, SetSuggestType, SuggestParams } from "../types/suggest";
+import { SetBooleanType, SetSuggestType, SuggestParams } from "../types/suggest";
 import { useDebounce } from "./useDebounce";
 import { getSuggestList } from "../api/suggest";
-import { SetInputType } from "../types/todo";
+import { SetStringType } from "../types/todo";
 
 const paramObj: SuggestParams = {
   q: '',
@@ -11,7 +11,7 @@ const paramObj: SuggestParams = {
   limit: SHOW_LIMIT
 };
 
-const useSearch = (setSuggestList: SetSuggestType, setInputText: SetInputType, setIsTyping: SetIsTypingType) => {
+const useSearch = (setSuggestList: SetSuggestType, setInputText: SetStringType, setIsTyping: SetBooleanType) => {
   const params = useRef(paramObj);
   const debounce = useDebounce();
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {

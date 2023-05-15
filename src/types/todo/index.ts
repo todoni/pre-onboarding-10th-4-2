@@ -5,7 +5,7 @@ export type TodoItemType = {
 };
 
 export type SetTodosType = Dispatch<SetStateAction<TodoFetchItemType[]>>;
-export type SetInputType = Dispatch<SetStateAction<string>>;
+export type SetStringType = Dispatch<SetStateAction<string>>;
 
 export interface TodoFetchItemType extends TodoItemType {
   createdAt: string,

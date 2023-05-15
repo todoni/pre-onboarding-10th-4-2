@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MouseEvent, SetStateAction } from "react";
 
 export type SuggestParams = {
   q: string,
@@ -12,13 +12,17 @@ export interface SuggestItemFetchType extends SuggestParams {
   total: number
 };
 
+type SuggestItemClickHandler = (e: MouseEvent<HTMLElement>) => void;
+
 export type SuggestListProps = {
-  suggestList: string[]
+  suggestList: string[],
+  clickHandler: SuggestItemClickHandler
 };
 
 export type SuggestItemProps = {
-  text: string
+  text: string,
+  clickHandler: SuggestItemClickHandler
 };
 
 export type SetSuggestType = Dispatch<SetStateAction<string[]>>;
-export type SetIsTypingType = Dispatch<SetStateAction<boolean>>;
+export type SetBooleanType = Dispatch<SetStateAction<boolean>>;
