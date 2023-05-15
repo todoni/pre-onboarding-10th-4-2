@@ -3,11 +3,11 @@
 import { BiSearch } from "react-icons/bi";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 
-import { createTodo } from "../api/todo";
-import useFocus from "../hooks/useFocus";
-import { InputTodoProps } from "../types/todo";
-import { SuggestList } from "./SuggestList";
-import useSearch from "../hooks/useSearch";
+import { createTodo } from "../../api/todo";
+import useFocus from "../../hooks/useFocus";
+import { InputTodoProps } from "../../types/todo";
+import { SuggestList } from "../suggest/SuggestList";
+import useSearch from "../../hooks/useSearch";
 // import useToggle from "../utils/useToggle";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
@@ -34,7 +34,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         const newItem = { title: trimmed };
         const { data } = await createTodo(newItem);
 
-        if (data) return setTodos((prev) => [...prev, data]);
+        if (data) return setTodos(prev => [...prev, data]);
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
@@ -43,10 +43,10 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         setIsLoading(false);
       }
     },
-    [inputText, setTodos],
+    [inputText, setTodos]
   );
 
-  const onBlurHandler = () => setIsTyping(false);
+  // const onBlurHandler = () => setIsTyping(false);
 
   // const handleSuggestionClick = (e: MouseEvent<HTMLButtonElement>) => {
   //   setInputText('');
@@ -61,7 +61,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         ref={ref}
         value={inputText}
         onChange={handleSearch}
-        onBlur={onBlurHandler}
+        // onBlur={onBlurHandler}
         disabled={isLoading}
       />
       {/* {!isLoading ? (

@@ -36,7 +36,7 @@ const useSearch = (setSuggestList: SetSuggestType, setInputText: SetInputType, s
     debounce(getSuggestions);
   };
 
-  return onChangeHandler
+  return onChangeHandler;
 };
 
 export default useSearch;

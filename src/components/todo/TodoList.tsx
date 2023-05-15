@@ -1,4 +1,4 @@
-import { TodoListProps } from "../types/todo";
+import { TodoListProps } from "../../types/todo";
 import TodoItem from "./TodoItem";
 
 const TodoList = ({ todos, setTodos }: TodoListProps) => {
