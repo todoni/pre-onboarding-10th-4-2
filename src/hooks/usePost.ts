@@ -1,13 +1,16 @@
 import { FormEvent, MouseEvent, useCallback } from "react";
 import { UsePostArgs } from "../types/suggest";
 import { createTodo } from "../api/todo";
+import blurInput from "../utils/blurInput";
 
 const usePost = ({
   setIsLoading,
   setInputText,
   setIsTyping,
   setTodos,
-  inputText
+  inputText,
+  ref,
+  formRef
 }: UsePostArgs) => {
   const handleSubmit = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
@@ -53,6 +56,8 @@ const usePost = ({
       } finally {
         setInputText("");
         setIsLoading(false);
+        setIsTyping(false);
+        blurInput(ref, formRef);
       }
     },
     [setTodos]

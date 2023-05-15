@@ -33,8 +33,8 @@ const useSearch = ({
 
     const getSuggestions = async () => {
       try {
-        const res = await getSuggestList(params.current);
         setIsLoading(true);
+        const res = await getSuggestList(params.current);
         /* eslint-disable */
         console.log(res.data.result);
         setSuggestList(res.data.result);
@@ -42,9 +42,7 @@ const useSearch = ({
         console.error(error);
         alert("Something went wrong.");
       } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 100);
+        setIsLoading(false);
       }
     };
     debounce(getSuggestions);

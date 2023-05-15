@@ -15,4 +15,8 @@
   &:active {
     background: #D5F4F1
   }
+
+  & .highlight {
+    color: #2BC9BA;
+  }
 };

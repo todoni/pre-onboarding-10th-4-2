@@ -1,14 +1,13 @@
 // import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
-import { FocusEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFocus from "../../hooks/useFocus";
 import { InputTodoProps } from "../../types/todo";
 import { SuggestList } from "../suggest/SuggestList";
 import useSearch from "../../hooks/useSearch";
 import usePost from "../../hooks/usePost";
-import { useDebounce } from "../../hooks/useDebounce";
-import { CLICK_DELAY_TIME } from "../../constants";
+import blurInput from "../../utils/blurInput";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
@@ -18,13 +17,14 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const { ref, setFocus } = useFocus();
-  const debounce = useDebounce(CLICK_DELAY_TIME);
   const postArgs = {
     setIsLoading,
     setTodos,
     setInputText,
     setIsTyping,
-    inputText
+    inputText,
+    ref,
+    formRef
   };
   const searchArgs = {
     setIsLoading,
@@ -35,17 +35,17 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const handleSearch = useSearch(searchArgs);
   const { handleSubmit, handleItemClick } = usePost(postArgs);
 
+  const handleBlur = ({ target }: Event) => {
+    if ((target as HTMLElement).matches('.input-text')) return;
+    setIsTyping(false);
+    ref.current!.blur();
+    blurInput(ref, formRef);
+  };
+
   useEffect(() => {
     setFocus();
+    document.addEventListener('click', handleBlur);
   }, [setFocus]);
-
-  const onBlurHandler = ({ target }: FocusEvent<HTMLInputElement>) => {
-    const { scrollWidth, clientWidth } = target;
-    if (scrollWidth > clientWidth) 
-      formRef.current!.style.boxShadow = '0px 4px 4px rgba(0, 0, 0, 0.25)';
-    else formRef.current!.style.boxShadow = 'none';
-    debounce(setIsTyping.bind(null, false));
-  }
 
   return (
     <form className="form-container" onSubmit={handleSubmit} ref={formRef}>
@@ -57,12 +57,11 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
           ref={ref}
           value={inputText}
           onChange={handleSearch}
-          onBlur={onBlurHandler}
           disabled={isLoading}
         />
       </div>
       {isLoading && <ImSpinner8 className="spinner" />}
-      {isTyping && <SuggestList suggestList={suggestList} clickHandler={handleItemClick} />}
+      {isTyping && <SuggestList suggestList={suggestList} clickHandler={handleItemClick} inputText={inputText} />}
     </form>
   );
 };

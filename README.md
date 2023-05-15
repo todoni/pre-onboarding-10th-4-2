@@ -3,3 +3,4 @@
 3. useRef type 오류
 4. textoverflow elipsis on input field
 5. detecting text overflow
+6. ts, es, pret config

@@ -1,5 +1,5 @@
 import { Dispatch, MouseEvent, SetStateAction } from "react";
-import { SetStringType, SetTodosType } from "../todo";
+import { FormRef, InputRef, SetStringType, SetTodosType } from "../todo";
 
 export type SuggestParams = {
   q: string,
@@ -17,12 +17,14 @@ type SuggestItemClickHandler = (e: MouseEvent<HTMLElement>) => void;
 
 export type SuggestListProps = {
   suggestList: string[],
-  clickHandler: SuggestItemClickHandler
+  clickHandler: SuggestItemClickHandler,
+  inputText: string
 };
 
 export type SuggestItemProps = {
   text: string,
-  clickHandler: SuggestItemClickHandler
+  clickHandler: SuggestItemClickHandler,
+  inputText: string
 };
 
 export type SetSuggestType = Dispatch<SetStateAction<string[]>>;
@@ -33,7 +35,9 @@ export type UsePostArgs = {
   setTodos: SetTodosType,
   setInputText: SetStringType,
   setIsTyping: SetBooleanType,
-  inputText: string
+  inputText: string,
+  ref: InputRef,
+  formRef: FormRef
 };
 
 export type UseSearchArgs = {
@@ -41,4 +45,4 @@ export type UseSearchArgs = {
   setInputText: SetStringType,
   setIsTyping: SetBooleanType,
   setIsLoading: SetBooleanType
-}
+};

@@ -1,10 +1,8 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 
 const useFocus = () => {
   const ref = useRef<HTMLInputElement>(null);
-  const setFocus = useCallback(() => {
-    ref.current && ref.current.focus();
-  }, [ref.current]);
+  const setFocus = () => ref.current && ref.current.focus();
 
   return { ref, setFocus };
 };
