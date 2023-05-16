@@ -1,8 +1,9 @@
 import { ITodoRepository } from "../domain/ITodoRepository";
-import { TodoDto } from "./TodoDto";
+import { TodoDto, TodoSearchDto } from "./TodoDto";
 import apiRequest from "../api/index";
 
 const RESOURCE = "/todos";
+const SEARCH = "/search";
 
 class TodoRepository implements ITodoRepository {
   async getTodoList(): Promise<TodoDto[]> {
@@ -29,6 +30,22 @@ class TodoRepository implements ITodoRepository {
       return response.data;
     } catch (error) {
       throw new Error("API deleteTodo error");
+    }
+  }
+
+  async getTodoSearch(query: string, page: number): Promise<TodoSearchDto> {
+    try {
+      const response = await apiRequest.get(`${SEARCH}`, {
+        params: {
+          q: query,
+          page: page,
+          limit: 10,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error("API getTodoSearch error");
     }
   }
 }

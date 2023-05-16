@@ -33,7 +33,21 @@ const useTodo = () => {
       console.log(error);
     }
   };
-  return { getTodos, createTodo, deleteTodo };
+
+  const getTodoSearch = async (
+    query: string,
+    page: number
+  ): Promise<Todo[] | undefined> => {
+    try {
+      const data = await repo.getTodoSearch(query, page);
+      return data.result.map((item) => {
+        return { id: item.id, title: item.title };
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return { getTodos, createTodo, deleteTodo, getTodoSearch };
 };
 
 export default useTodo;
