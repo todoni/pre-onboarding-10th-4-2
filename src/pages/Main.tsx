@@ -3,16 +3,16 @@ import "./Main.css";
 import Header from "../components/common/Header";
 import InputTodo from "../components/todo/InputTodo";
 import TodoList from "../components/todo/TodoList";
-import { getTodoList } from "../api/todo";
-import { TodoFetchItemType } from "../types/todo";
+import { Todo } from "../domain/Todo";
+import useTodo from "../application/useTodo";
 
 const Main = () => {
-  const [todoListData, setTodoListData] = useState<TodoFetchItemType[]>([]);
+  const [todoListData, setTodoListData] = useState<Todo[]>([]);
+  const { onLoadTodos } = useTodo();
 
   useEffect(() => {
     (async () => {
-      const { data } = await getTodoList();
-      setTodoListData(data || []);
+      await onLoadTodos(setTodoListData);
     })();
   }, []);
 

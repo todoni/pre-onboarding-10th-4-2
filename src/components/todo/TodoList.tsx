@@ -1,6 +1,12 @@
-import { TodoListProps } from "../../types/todo";
+import { SetStateAction } from "react";
+import { Todo } from "../../domain/Todo";
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
+
+type TodoListProps = {
+  todos: Todo[];
+  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
+};
 
 const TodoList = ({ todos, setTodos }: TodoListProps) => {
   return todos.length ? (
@@ -13,4 +19,5 @@ const TodoList = ({ todos, setTodos }: TodoListProps) => {
     <div className="empty-list">...</div>
   );
 };
+
 export default TodoList;

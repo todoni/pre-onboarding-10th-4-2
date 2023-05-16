@@ -1,15 +1,19 @@
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
 import "./InputTodo.css";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import useFocus from "../../hooks/useFocus";
-import { InputTodoProps } from "../../types/todo";
 import { SuggestList } from "../suggest/SuggestList";
 import useSearch from "../../hooks/useSearch";
 import usePost from "../../hooks/usePost";
 import { blurInput } from "../../utils";
 import { PARAM_OBJ } from "../../constants";
 import useScroll from "../../hooks/useScroll";
+import { Todo } from "../../domain/Todo";
+
+export type InputTodoProps = {
+  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
+};
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");

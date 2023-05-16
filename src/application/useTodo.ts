@@ -5,6 +5,19 @@ import { Todo } from "../domain/Todo";
 const useTodo = () => {
   const repo = todoRepository;
 
+  const onLoadTodos = async (setTodos: React.Dispatch<SetStateAction<Todo[]>>): Promise<void> => {
+    try {
+      const data = await repo.getTodoList();
+      setTodos(
+        data.map(item => {
+          return { id: item.id, title: item.title };
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onRemoveTodo = async (
     id: string,
     setTodos: React.Dispatch<SetStateAction<Todo[]>>,
@@ -22,7 +35,7 @@ const useTodo = () => {
     }
   };
 
-  return { onRemoveTodo };
+  return { onLoadTodos, onRemoveTodo };
 };
 
 export default useTodo;
