@@ -1,5 +1,5 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { Todo } from "../domain/Todo";
 import useTodo from "../application/useTodo";
 
@@ -12,20 +12,31 @@ interface TodoItemProps {
 const TodoItem = ({ id, title, setTodos }: TodoItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { deleteTodo } = useTodo();
+  const mounted = useRef(true);
 
   const handleRemoveTodo = useCallback(async () => {
     try {
       setIsLoading(true);
       await deleteTodo(id);
 
-      setTodos((prev) => prev.filter((item) => item.id !== id));
+      if (mounted.current) {
+        setTodos((prev) => prev.filter((item) => item.id !== id));
+      }
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
     } finally {
-      setIsLoading(false);
+      if (mounted.current) {
+        setIsLoading(false);
+      }
     }
-  }, [id, setTodos]);
+  }, [id, setTodos, deleteTodo]);
+
+  useEffect(() => {
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <li className="item">
