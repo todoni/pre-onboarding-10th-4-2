@@ -1,16 +1,14 @@
 import { UIEvent } from "react";
-import { getSuggestList } from "../api/suggest";
 import { UseScrollArgs } from "../types/hook";
 import useThrottle from "./useThrottle";
-import { SCROLL_DELAY_TIME } from "../constants";
+import TodoRepository from "../infrastructure/TodoRepository";
 
-const useScroll = ({
-  params,
-  isMore,
-  setSuggestList,
-  setIsScrolling,
-}: UseScrollArgs) => {
+const SCROLL_DELAY_TIME = 300;
+
+const useScroll = ({ params, isMore, setSuggestList, setIsScrolling }: UseScrollArgs) => {
   const throttle = useThrottle(SCROLL_DELAY_TIME);
+  const repo = TodoRepository;
+
   const onScrollHandler = ({ currentTarget }: UIEvent<HTMLElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = currentTarget;
     const isAtBottom = scrollTop + clientHeight === scrollHeight;
@@ -19,13 +17,16 @@ const useScroll = ({
 
     const getSuggestions = async () => {
       try {
-        if (params.current.q === '') return;
+        if (params.current.q === "") return;
 
         setIsScrolling(true);
         params.current.page = params.current.page + 1;
 
-        const res = await getSuggestList(params.current);
-        const { page, limit, total, result } = res.data;
+        const { page, limit, total, result } = await repo.getTodoSearchList(
+          params.current.q,
+          params.current.page,
+          params.current.limit
+        );
 
         isMore.current = page * limit < total;
         setSuggestList(prev => [...prev, ...result]);
@@ -34,7 +35,7 @@ const useScroll = ({
         alert("Something went wrong.");
       } finally {
         setIsScrolling(false);
-        if (params.current.q === '') setSuggestList([]);
+        if (params.current.q === "") setSuggestList([]);
       }
     };
     throttle(getSuggestions);
