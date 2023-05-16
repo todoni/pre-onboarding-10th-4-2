@@ -16,7 +16,7 @@ class TodoRepository implements ITodoRepository {
 
   async createTodo(title: string): Promise<TodoDto> {
     try {
-      const response = await apiRequest.post(`${RESOURCE}`, { data: title });
+      const response = await apiRequest.post(`${RESOURCE}`, { title: title });
       return response.data;
     } catch (error) {
       throw new Error("API createTodo error");
