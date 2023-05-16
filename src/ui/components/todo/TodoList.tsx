@@ -1,19 +1,15 @@
 import React from "react";
-import { SetStateAction } from "react";
-import { Todo } from "../../../domain/Todo";
+import { useTodo } from "../../../application/TodoProvider";
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
 
-type TodoListProps = {
-  todos: Todo[];
-  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
-};
+const TodoList = () => {
+  const { todos } = useTodo();
 
-const TodoList = ({ todos, setTodos }: TodoListProps) => {
   return todos.length ? (
     <ul>
       {todos.map(({ id, title }) => (
-        <TodoItem key={id} id={id} title={title} setTodos={setTodos} />
+        <TodoItem key={id} id={id} title={title} />
       ))}
     </ul>
   ) : (

@@ -2,20 +2,16 @@ import React from "react";
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
 import "./InputTodo.css";
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFocus from "../../../application/useFocus";
 import { SuggestList } from "../suggest/SuggestList";
 import useSearch from "../../../application/useSearch";
-import usePost from "../../../application/usePost";
+//import usePost from "../../../application/usePost";
 import { blurInput } from "../../../utils";
 import useScroll from "../../../application/useScroll";
-import { Todo } from "../../../domain/Todo";
+//import { Todo } from "../../../domain/Todo";
 
-export type InputTodoProps = {
-  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
-};
-
-const InputTodo = ({ setTodos }: InputTodoProps) => {
+const InputTodo = () => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [suggestList, setSuggestList] = useState<string[]>([]);
@@ -27,15 +23,14 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const isMore = useRef<boolean>(false);
 
   const { ref, setFocus } = useFocus();
-  const postArgs = {
+  /*const postArgs = {
     setIsLoading,
-    setTodos,
     setInputText,
     setIsTyping,
     inputText,
     ref,
     formRef,
-  };
+  };*/
   const searchArgs = {
     setIsLoading,
     setInputText,
@@ -51,7 +46,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
     setIsScrolling,
   };
   const handleChange = useSearch(searchArgs);
-  const { handleSubmit, handleItemClick } = usePost(postArgs);
+  //const { handleSubmit, handleItemClick } = usePost(postArgs);
   const handleScroll = useScroll(scrollArgs);
 
   const handleBlur = ({ target }: Event) => {
@@ -67,7 +62,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   }, [setFocus]);
 
   return (
-    <form className="form-container" onSubmit={handleSubmit} ref={formRef}>
+    <form className="form-container" onSubmit={() => {}} ref={formRef}>
       <BiSearch className="search-icon" />
       <div className="input-container">
         <input
@@ -83,7 +78,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
       {isTyping && (
         <SuggestList
           suggestList={suggestList}
-          clickHandler={handleItemClick}
+          clickHandler={() => {}}
           inputText={inputText}
           isMore={isMore}
           scrollHandler={handleScroll}
