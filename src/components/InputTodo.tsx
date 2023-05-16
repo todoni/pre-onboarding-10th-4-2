@@ -1,5 +1,5 @@
 import { FaPlusCircle, FaSpinner } from "react-icons/fa";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { createTodo } from "../api/todo";
 import useFocus from "../hooks/useFocus";
@@ -38,7 +38,7 @@ const InputTodo = ({ setTodos }) => {
         setIsLoading(false);
       }
     },
-    [inputText, setTodos],
+    [inputText, setTodos]
   );
 
   return (

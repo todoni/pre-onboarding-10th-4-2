@@ -1,5 +1,5 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { deleteTodo } from "../api/todo";
 
