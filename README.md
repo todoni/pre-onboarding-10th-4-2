@@ -1,3 +1,12 @@
+패키지 매니저 yarn 사용
+yarn 설치 후 사용 요망
+
+```
+yarn install
+yarn start
+```
+
+잡 메모
 1. npm i 오류
 2. todoitem finally 오류
 3. useRef type 오류
