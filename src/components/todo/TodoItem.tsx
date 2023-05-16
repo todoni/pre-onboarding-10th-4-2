@@ -1,28 +1,25 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
-import { MouseEvent, useCallback, useState } from "react";
+import { MouseEvent, SetStateAction, useCallback, useState } from "react";
 import "./TodoItem.css";
-import { deleteTodo } from "../../api/todo";
-import { TodoItemProps } from "../../types/todo";
+import useTodo from "../../application/useTodo";
+import { Todo } from "../../domain/Todo";
+
+type TodoItemProps = {
+  id: string;
+  title: string;
+  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
+};
 
 const TodoItem = ({ id, title, setTodos }: TodoItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { onRemoveTodo } = useTodo();
 
   const handleRemoveTodo = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      await deleteTodo(id);
-
-      setIsLoading(false);
-      setTodos(prev => prev.filter(item => item.id !== id));
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-      alert("Something went wrong.");
-    }
+    await onRemoveTodo(id, setTodos, setIsLoading);
   }, [id, setTodos]);
 
   const clickHandler = (e: MouseEvent<HTMLElement>) => {
-    if (!(e.target as HTMLElement).closest('.item-option')) alert(title);
+    if (!(e.target as HTMLElement).closest(".item-option")) alert(title);
   };
 
   return (
