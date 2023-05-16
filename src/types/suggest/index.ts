@@ -1,36 +1,21 @@
 import { Dispatch, MouseEvent, MutableRefObject, SetStateAction, UIEvent } from "react";
 
-export type SuggestParams = {
-  q: string,
-  page: number,
-  limit: number
-};
-
-export interface SuggestItemFetchType extends SuggestParams {
-  result: string[],
-  qty: number,
-  total: number
-};
-
-type SuggestItemClickHandler = (e: MouseEvent<HTMLElement>) => void;
-type SuggestListScrollHandler = (e: UIEvent<HTMLElement>) => void;
-
-export type ParamRef = MutableRefObject<SuggestParams>;
+export type ParamRef = MutableRefObject<{ q: string; page: number; limit: number }>;
 export type IsMoreRef = MutableRefObject<boolean>;
 
 export type SuggestListProps = {
-  suggestList: string[],
-  clickHandler: SuggestItemClickHandler,
-  inputText: string,
-  isMore: IsMoreRef,
-  scrollHandler: SuggestListScrollHandler,
-  isScrolling: boolean
+  suggestList: string[];
+  inputText: string;
+  isMore: MutableRefObject<boolean>;
+  scrollHandler: (e: UIEvent<HTMLElement>) => void;
+  clickHandler: (e: MouseEvent<HTMLElement>) => void;
+  isScrolling: boolean;
 };
 
 export type SuggestItemProps = {
-  text: string,
-  clickHandler: SuggestItemClickHandler,
-  inputText: string
+  text: string;
+  clickHandler: (e: MouseEvent<HTMLElement>) => void;
+  inputText: string;
 };
 
 export type SetSuggestType = Dispatch<SetStateAction<string[]>>;

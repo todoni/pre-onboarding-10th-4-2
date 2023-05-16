@@ -1,5 +1,6 @@
-import { IsMoreRef, ParamRef, SetBooleanType, SetSuggestType } from "../suggest";
+import { ParamRef, SetBooleanType, SetSuggestType } from "../suggest";
 import { FormRef, InputRef, SetStringType, SetTodosType } from "../todo";
+import { MutableRefObject } from "react";
 
 export type UsePostArgs = {
   setIsLoading: SetBooleanType;
@@ -17,12 +18,12 @@ export type UseSearchArgs = {
   setIsTyping: SetBooleanType;
   setIsLoading: SetBooleanType;
   params: ParamRef;
-  isMore: IsMoreRef;
+  isMore: MutableRefObject<boolean>;
 };
 
 export type UseScrollArgs = {
   params: ParamRef;
-  isMore: IsMoreRef;
-  setSuggestList: SetSuggestType,
-  setIsScrolling: SetBooleanType
+  isMore: MutableRefObject<boolean>;
+  setSuggestList: SetSuggestType;
+  setIsScrolling: SetBooleanType;
 };

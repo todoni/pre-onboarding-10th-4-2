@@ -1,8 +1,10 @@
 import { ChangeEvent } from "react";
-import { INITIAL_PAGE, INPUT_DELAY_TIME } from "../constants";
 import todoRepository from "../infrastructure/TodoRepository";
 import { UseSearchArgs } from "../types/hook";
 import { useDebounce } from "./useDebounce";
+
+const INITIAL_PAGE = 1;
+const INPUT_DELAY_TIME = 500;
 
 const useSearch = ({
   setInputText,

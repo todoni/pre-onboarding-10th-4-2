@@ -1,8 +1,9 @@
+import React from "react";
 import { FaSpinner, FaTrash } from "react-icons/fa";
 import { MouseEvent, SetStateAction, useCallback, useState } from "react";
 import "./TodoItem.css";
-import useTodo from "../../application/useTodo";
-import { Todo } from "../../domain/Todo";
+import useTodo from "../../../application/useTodo";
+import { Todo } from "../../../domain/Todo";
 
 type TodoItemProps = {
   id: string;
@@ -27,7 +28,7 @@ const TodoItem = ({ id, title, setTodos }: TodoItemProps) => {
       <span>{title}</span>
       <div className="item-option">
         {!isLoading ? (
-          <button onClick={() => handleRemoveTodo()}>
+          <button onClick={handleRemoveTodo}>
             <FaTrash className="btn-trash" />
           </button>
         ) : (

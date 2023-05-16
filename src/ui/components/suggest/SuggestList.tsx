@@ -1,6 +1,5 @@
-import React from "react";
 import "./SuggestList.css";
-import { SuggestListProps } from "../../types/suggest";
+import { SuggestListProps } from "../../../types/suggest";
 import { SuggestItem } from "./SuggestItem";
 import { ImSpinner8 } from "react-icons/im";
 

@@ -1,6 +1,6 @@
 import { ITodoRepository } from "../domain/ITodoRepository";
 import { TodoDto, TodoSearchDto } from "./TodoDto";
-import apiRequest from "../api/index";
+import apiRequest from "../lib/AxiosIntance";
 
 const RESOURCE = "/todos";
 const SEARCH = "/search";
@@ -44,7 +44,7 @@ class TodoRepository implements ITodoRepository {
       });
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw new Error("API getTodoSearch error");
     }
   }

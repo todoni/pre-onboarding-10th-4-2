@@ -1,15 +1,15 @@
+import React from "react";
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
 import "./InputTodo.css";
 import { SetStateAction, useEffect, useRef, useState } from "react";
-import useFocus from "../../hooks/useFocus";
+import useFocus from "../../../application/useFocus";
 import { SuggestList } from "../suggest/SuggestList";
-import useSearch from "../../hooks/useSearch";
-import usePost from "../../hooks/usePost";
-import { blurInput } from "../../utils";
-import { PARAM_OBJ } from "../../constants";
-import useScroll from "../../hooks/useScroll";
-import { Todo } from "../../domain/Todo";
+import useSearch from "../../../application/useSearch";
+import usePost from "../../../application/usePost";
+import { blurInput } from "../../../utils";
+import useScroll from "../../../application/useScroll";
+import { Todo } from "../../../domain/Todo";
 
 export type InputTodoProps = {
   setTodos: React.Dispatch<SetStateAction<Todo[]>>;
@@ -23,7 +23,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [isScrolling, setIsScrolling] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
-  const params = useRef(PARAM_OBJ);
+  const params = useRef({ q: "", page: 1, limit: 10 });
   const isMore = useRef<boolean>(false);
 
   const { ref, setFocus } = useFocus();
@@ -57,7 +57,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const handleBlur = ({ target }: Event) => {
     if ((target as HTMLElement).matches(".input-text")) return;
     setIsTyping(false);
-    ref.current!.blur();
+    ref.current?.blur();
     blurInput(ref, formRef);
   };
 
