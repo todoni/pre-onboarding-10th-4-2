@@ -1,25 +1,38 @@
 import "./SuggestList.css";
-import { SuggestListProps } from "../../../types/suggest";
-import { SuggestItem } from "./SuggestItem";
-import { ImSpinner8 } from "react-icons/im";
+import SuggestItem from "./SuggestItem";
+import { useEffect, useRef } from "react";
+import { useTodoSuggest } from "../../../application/TodoSuggestProvider";
 
-export const SuggestList = ({
-  suggestList,
-  clickHandler,
-  inputText,
-  isMore,
-  scrollHandler,
-  isScrolling,
-}: SuggestListProps) => {
-  const isEmpty = suggestList.length === 0;
-  const icon = isScrolling ? <ImSpinner8 className="spinner" /> : "...";
+interface SuggestListProps {
+  currentQuery: string;
+}
+
+const SuggestList = ({ currentQuery }: SuggestListProps) => {
+  const { suggestedTodos, getSuggestedTodos, page, setPage } = useTodoSuggest();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const isEmpty = suggestedTodos.length === 0;
+
+  useEffect(() => {
+    getSuggestedTodos(currentQuery, page);
+  }, [currentQuery, page]);
+
+  const onScroll = () => {
+    if (
+      scrollRef?.current!.scrollTop + scrollRef?.current!.clientHeight >=
+      scrollRef?.current!.scrollHeight
+    ) {
+      setPage(prev => prev + 1);
+    }
+  };
   return (
-    <ul className="suggestion-wrapper" onScroll={scrollHandler}>
+    <div className="suggestion-wrapper" ref={scrollRef} onScroll={onScroll}>
       {isEmpty && <p className="suggest-none">추천 검색어 없음</p>}
-      {suggestList.map((item, index) => (
-        <SuggestItem key={index} text={item} clickHandler={clickHandler} inputText={inputText} />
+      {suggestedTodos.map((item, index) => (
+        <SuggestItem key={index} index={index} content={item} currentQuery={currentQuery} />
       ))}
-      {!isEmpty && isMore.current && <div className="more-list">{icon}</div>}
-    </ul>
+    </div>
   );
 };
+
+export default SuggestList;
