@@ -1,5 +1,6 @@
 import { ImSpinner8 } from "react-icons/im";
 import { BiSearch } from "react-icons/bi";
+import "./InputTodo.css";
 import { useEffect, useRef, useState } from "react";
 import useFocus from "../../hooks/useFocus";
 import { InputTodoProps } from "../../types/todo";

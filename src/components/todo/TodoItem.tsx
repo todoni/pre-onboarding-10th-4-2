@@ -1,6 +1,6 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
 import { MouseEvent, useCallback, useState } from "react";
-
+import "./TodoItem.css";
 import { deleteTodo } from "../../api/todo";
 import { TodoItemProps } from "../../types/todo";
 

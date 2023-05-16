@@ -1,5 +1,6 @@
 import { TodoListProps } from "../../types/todo";
 import TodoItem from "./TodoItem";
+import "./TodoList.css";
 
 const TodoList = ({ todos, setTodos }: TodoListProps) => {
   return todos.length ? (

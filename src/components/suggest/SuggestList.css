@@ -17,3 +17,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.more-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #9F9F9F;
+  margin: 4px 0 5px 0;
+}
