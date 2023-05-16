@@ -1,6 +1,6 @@
 import { FormEvent, MouseEvent, useCallback } from "react";
+import todoRepository from "../infrastructure/TodoRepository";
 import { UsePostArgs } from "../types/hook";
-import { createTodo } from "../api/todo";
 import { blurInput } from "../utils";
 
 const usePost = ({
@@ -10,8 +10,9 @@ const usePost = ({
   setTodos,
   inputText,
   ref,
-  formRef
+  formRef,
 }: UsePostArgs) => {
+  const repo = todoRepository;
   const handleSubmit = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       try {
@@ -21,15 +22,15 @@ const usePost = ({
         const trimmed = inputText.trim();
         if (!trimmed) return alert("Please write something");
 
-        const newItem = { title: trimmed };
-        const { data } = await createTodo(newItem);
+        const newTitle = trimmed;
+        const data = await repo.createTodo(newTitle);
 
-        if (data) return setTodos(prev => [...prev, data]);
+        setTodos(prev => [...prev, { id: data.id, title: data.title }]);
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
       } finally {
-        setInputText('');
+        setInputText("");
         setIsTyping(false);
         setIsLoading(false);
       }
@@ -44,10 +45,9 @@ const usePost = ({
 
         const suggestion = (e.target as HTMLElement).textContent!;
 
-        const newItem = { title: suggestion };
-        const { data } = await createTodo(newItem);
-
-        if (data) return setTodos(prev => [...prev, data]);
+        const newTitle = suggestion;
+        const data = await repo.createTodo(newTitle);
+        setTodos(prev => [...prev, { id: data.id, title: data.title }]);
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
@@ -63,7 +63,7 @@ const usePost = ({
 
   return {
     handleSubmit,
-    handleItemClick
+    handleItemClick,
   };
 };
 

@@ -1,31 +1,32 @@
 import { Dispatch, RefObject, SetStateAction } from "react";
+import { Todo } from "../../domain/Todo";
 
 export type TodoItemType = {
-  title: string
+  title: string;
 };
 
-export type SetTodosType = Dispatch<SetStateAction<TodoFetchItemType[]>>;
+export type SetTodosType = Dispatch<SetStateAction<Todo[]>>;
 export type SetStringType = Dispatch<SetStateAction<string>>;
 
 export interface TodoFetchItemType extends TodoItemType {
-  createdAt: string,
-  updatedAt: string,
-  id: string
-};
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
 
 export type TodoItemProps = {
-  id: string,
-  title: string,
-  setTodos: SetTodosType
+  id: string;
+  title: string;
+  setTodos: SetTodosType;
 };
 
 export type InputTodoProps = {
- setTodos: SetTodosType
+  setTodos: SetTodosType;
 };
 
 export type TodoListProps = {
-  todos: TodoFetchItemType[],
-  setTodos: SetTodosType
+  todos: TodoFetchItemType[];
+  setTodos: SetTodosType;
 };
 
 export type InputRef = RefObject<HTMLInputElement>;
