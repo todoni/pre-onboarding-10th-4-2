@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react";
 import { INITIAL_PAGE, INPUT_DELAY_TIME } from "../constants";
+import todoRepository from "../infrastructure/TodoRepository";
 import { UseSearchArgs } from "../types/hook";
 import { useDebounce } from "./useDebounce";
-import { getSuggestList } from "../api/suggest";
 
 const useSearch = ({
   setInputText,
@@ -10,10 +10,10 @@ const useSearch = ({
   setIsTyping,
   setSuggestList,
   params,
-  isMore
+  isMore,
 }: UseSearchArgs) => {
-  
   const debounce = useDebounce(INPUT_DELAY_TIME);
+  const repo = todoRepository;
 
   const onChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
@@ -29,12 +29,15 @@ const useSearch = ({
 
     const getSuggestions = async () => {
       try {
-        if (params.current.q === '') return;
+        if (params.current.q === "") return;
 
         setIsLoading(true);
 
-        const res = await getSuggestList(params.current);
-        const { page, limit, total, result } = res.data;
+        const { page, limit, total, result } = await repo.getTodoSearchList(
+          params.current.q,
+          params.current.page,
+          params.current.limit
+        );
 
         isMore.current = page * limit < total;
         setSuggestList(result);
