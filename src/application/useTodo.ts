@@ -16,13 +16,12 @@ const useTodo = () => {
     }
   };
 
-  const createTodo = async (title: string): Promise<Todo> => {
+  const createTodo = async (title: string): Promise<Todo | undefined> => {
     try {
       const data = await repo.createTodo(title);
       return { id: data.id, title: data.title };
     } catch (error) {
       console.log(error);
-      return { id: "", title: "" };
     }
   };
 
@@ -37,12 +36,10 @@ const useTodo = () => {
   const getTodoSearch = async (
     query: string,
     page: number
-  ): Promise<Todo[] | undefined> => {
+  ): Promise<string[] | undefined> => {
     try {
       const data = await repo.getTodoSearch(query, page);
-      return data.result.map((item) => {
-        return { id: item.id, title: item.title };
-      });
+      return data.result;
     } catch (error) {
       console.log(error);
     }

@@ -7,7 +7,7 @@ export interface TodoDto {
 
 export interface TodoSearchDto {
   q: string;
-  result: TodoDto[];
+  result: string[];
   qty: number;
   total: number;
   page: number;
