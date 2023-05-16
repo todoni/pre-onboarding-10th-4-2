@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useTodo from "../application/useTodo";
+import useTodo from "../../application/useTodo";
 
 import Header from "../components/Header";
 import InputTodo from "../components/InputTodo";
 import TodoList from "../components/TodoList";
-import { Todo } from "../domain/Todo";
+import { Todo } from "../../domain/Todo";
 
 const Main = () => {
   const [todoListData, setTodoListData] = useState<Todo[]>([]);

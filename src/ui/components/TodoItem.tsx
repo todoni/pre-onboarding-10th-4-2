@@ -1,7 +1,7 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
 import React, { useCallback, useState, useEffect, useRef } from "react";
-import { Todo } from "../domain/Todo";
-import useTodo from "../application/useTodo";
+import { Todo } from "../../domain/Todo";
+import useTodo from "../../application/useTodo";
 
 interface TodoItemProps {
   id: string;

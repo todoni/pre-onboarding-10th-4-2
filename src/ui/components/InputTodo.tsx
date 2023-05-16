@@ -1,9 +1,9 @@
 import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 import React, { useCallback, useEffect, useState } from "react";
 
-import useFocus from "../hooks/useFocus";
-import { Todo } from "../domain/Todo";
-import useTodo from "../application/useTodo";
+import useFocus from "../../application/useFocus";
+import { Todo } from "../../domain/Todo";
+import useTodo from "../../application/useTodo";
 
 interface InputTodoProps {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
