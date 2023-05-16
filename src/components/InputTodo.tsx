@@ -1,16 +1,18 @@
 import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 import React, { useCallback, useEffect, useState } from "react";
 
-import { createTodo } from "../api/todo";
 import useFocus from "../hooks/useFocus";
+import { Todo } from "../domain/Todo";
+import useTodo from "../application/useTodo";
 
 interface InputTodoProps {
-  setTodos: React.Dispatch<React.SetStateAction<never[]>>;
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { createTodo } = useTodo();
   const { ref, setFocus } = useFocus();
 
   useEffect(() => {
@@ -28,8 +30,8 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
           return alert("Please write something");
         }
 
-        const newItem = { title: trimmed };
-        const { data } = await createTodo(newItem);
+        const newItem = trimmed;
+        const data = await createTodo(newItem);
 
         if (data) {
           return setTodos((prev) => [...prev, data]);
