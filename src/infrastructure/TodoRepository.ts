@@ -1,6 +1,6 @@
 import { ITodoRepository } from "../domain/ITodoRepository";
 import { TodoDto } from "./TodoDto";
-import apiRequest from "../api";
+import apiRequest from "../api/index";
 
 const RESOURCE = "/todos";
 
