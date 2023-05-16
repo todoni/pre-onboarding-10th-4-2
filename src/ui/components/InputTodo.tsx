@@ -29,13 +29,8 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         if (!trimmed) {
           return alert("Please write something");
         }
-
-        const newItem = trimmed;
-        const data = await createTodo(newItem);
-
-        if (data) {
-          return setTodos((prev) => [...prev, data]);
-        }
+        const newTitle = trimmed;
+        await createTodo(newTitle, setTodos);
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");

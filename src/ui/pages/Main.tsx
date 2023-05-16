@@ -14,9 +14,7 @@ const Main = () => {
   useEffect(() => {
     (async () => {
       if (isLoaded === false) {
-        const data = await getTodos();
-        setTodoListData(data || []);
-        setIsLoaded(true);
+        await getTodos(setTodoListData, setIsLoaded);
       }
     })();
   }, [getTodos, isLoaded]);

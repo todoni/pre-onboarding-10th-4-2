@@ -15,21 +15,7 @@ const TodoItem = ({ id, title, setTodos }: TodoItemProps) => {
   const mounted = useRef(true);
 
   const handleRemoveTodo = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      await deleteTodo(id);
-
-      if (mounted.current) {
-        setTodos((prev) => prev.filter((item) => item.id !== id));
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong.");
-    } finally {
-      if (mounted.current) {
-        setIsLoading(false);
-      }
-    }
+    await deleteTodo(id, setTodos, setIsLoading, mounted);
   }, [id, setTodos, deleteTodo]);
 
   useEffect(() => {
