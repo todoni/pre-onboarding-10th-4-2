@@ -6,3 +6,5 @@
 6. ts, es, pret config
 7. debounce, throttle
 8. scroll events
+
+배포, 깃헙 이슈, 테스트
