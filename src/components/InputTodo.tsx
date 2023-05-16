@@ -44,7 +44,7 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
         setIsLoading(false);
       }
     },
-    [inputText, setTodos]
+    [inputText, setTodos, createTodo]
   );
 
   return (

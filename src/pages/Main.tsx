@@ -8,14 +8,18 @@ import { Todo } from "../domain/Todo";
 
 const Main = () => {
   const [todoListData, setTodoListData] = useState<Todo[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const { getTodos } = useTodo();
 
   useEffect(() => {
     (async () => {
-      const data = await getTodos();
-      setTodoListData(data || []);
+      if (isLoaded === false) {
+        const data = await getTodos();
+        setTodoListData(data || []);
+        setIsLoaded(true);
+      }
     })();
-  }, []);
+  }, [getTodos, isLoaded]);
 
   return (
     <div className="container">

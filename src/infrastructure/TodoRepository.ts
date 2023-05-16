@@ -33,4 +33,6 @@ class TodoRepository implements ITodoRepository {
   }
 }
 
-export default new TodoRepository();
+const todoRepository = new TodoRepository();
+
+export default todoRepository;
