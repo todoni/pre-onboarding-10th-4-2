@@ -10,6 +10,8 @@
 
 ## 배포
 
+[https://pre-onboarding-10th-4-2-deploy.vercel.app/](https://pre-onboarding-10th-4-2-deploy.vercel.app/)
+
 ## 사용 기술
 
 - Typescript
@@ -105,7 +107,7 @@ src
 
 - DDD(Domain Driven Design) 패턴 적용
   - application, domain, infrastructure, ui로 추상화 및 관심사 분리
-  - Best Practice로 선정된 코드에 패턴을 적용하여 리팩토링했지만 debounce hook 문제와 시간 관계상 Controller&Prensenter로 선정.
+  - Best Practice로 선정된 코드에 패턴을 적용하여 리팩토링했지만 debounce hook 문제와 시간 관계상 Prensenter-Container로 선정.
 - 깃허브 액션으로 이슈&PR 자동화
   - 문서화를 위한 Create Issue Branch 도입으로 이슈&PR 자동화
 
@@ -141,9 +143,23 @@ chore : 빌드 업무 수정, 패키지 매니저 수정, 그 외 자잘한 수�
 
 ## 실행 방법
 
+### 설치
+
 ```shell
 git clone https://github.com/PreOnboarding-2/pre-onboarding-10th-4-2.git
 cd pre-onboarding-10th-4-2
 yarn install
-npm start
+```
+
+### 환경 변수 설정
+
+```
+REACT_APP_API_URL= [api url]
+REACT_APP_TOKEN= [토큰]
+```
+
+### 실행
+
+```shell
+yarn start
 ```
