@@ -25,13 +25,18 @@ const TodoItem = ({ id, title, setTodos }: TodoItemProps) => {
     if (!(e.target as HTMLElement).closest('.item-option')) alert(title);
   };
 
+  const trashStyle = {
+    color: 'orangered',
+    fontSize: '16px'
+  };
+
   return (
     <li className="item" onClick={clickHandler}>
       <span>{title}</span>
       <div className="item-option">
         {!isLoading ? (
           <button onClick={() => handleRemoveTodo()}>
-            <FaTrash className="btn-trash" />
+            <FaTrash className="btn-trash" style={trashStyle} />
           </button>
         ) : (
           <FaSpinner className="spinner" />
