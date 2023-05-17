@@ -35,9 +35,7 @@ const InputTodo = () => {
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     resetSuggestedTodos();
-    console.info(event.target.value);
     setInputValue(event.target.value);
-    //await getSuggestedTodos(event.target.value);
   };
 
   useEffect(() => {

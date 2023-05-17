@@ -1,3 +1,4 @@
+import { useTodo } from "../../../application/TodoProvider";
 import "./SuggestItem.css";
 
 interface SuggestItemProps {
@@ -7,6 +8,7 @@ interface SuggestItemProps {
 }
 
 const SuggestItem = ({ index, content, currentQuery }: SuggestItemProps) => {
+  const { onCreateTodo } = useTodo();
   const regex = new RegExp(`(${currentQuery})`, "gi");
   const newText = content.split(regex).map((str, idx) => {
     if (currentQuery.toLowerCase() === str.toLowerCase())
@@ -17,8 +19,11 @@ const SuggestItem = ({ index, content, currentQuery }: SuggestItemProps) => {
       );
     return str;
   });
+  const handleClickItem = async () => {
+    await onCreateTodo(content);
+  };
   return (
-    <li className="suggest-item">
+    <li className="suggest-item" onClick={handleClickItem}>
       {index}
       {newText}
     </li>
