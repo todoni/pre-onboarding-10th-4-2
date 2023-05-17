@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 const useThrottle = (time: number) => {
   const [isThrottle, setIsThrottle] = useState(false);
@@ -10,7 +10,7 @@ const useThrottle = (time: number) => {
       fnc();
       setIsThrottle(false);
     }, time);
-  }
+  };
 };
 
 export default useThrottle;
