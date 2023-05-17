@@ -11,6 +11,21 @@
   overflow-y: scroll;
 }
 
+.suggestion-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.suggestion-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.48);
+  border-radius: 5px;
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+
+.suggestion-wrapper::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
 .suggest-none {
   height: 100%;
   display: flex;
