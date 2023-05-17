@@ -1,15 +1,13 @@
-import { ImSpinner8 } from "react-icons/im";
-import { BiSearch } from "react-icons/bi";
 import "./InputTodo.css";
 import { useEffect, useRef, useState } from "react";
-import useFocus from "../../hooks/useFocus";
-import { InputTodoProps } from "../../types/todo";
-import { SuggestList } from "../suggest/SuggestList";
-import useSearch from "../../hooks/useSearch";
-import usePost from "../../hooks/usePost";
-import { blurInput } from "../../utils";
-import { PARAM_OBJ } from "../../constants";
-import useScroll from "../../hooks/useScroll";
+import useFocus from "../../../hooks/useFocus";
+import { InputTodoProps } from "../../../types/todo";
+import useSearch from "../../../hooks/useSearch";
+import usePost from "../../../hooks/usePost";
+import { blurInput } from "../../../utils";
+import { PARAM_OBJ } from "../../../constants";
+import useScroll from "../../../hooks/useScroll";
+import InputTodoUI from "./InputTodo.presenter";
 
 const InputTodo = ({ setTodos }: InputTodoProps) => {
   const [inputText, setInputText] = useState("");
@@ -53,8 +51,12 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   const handleBlur = ({ target }: Event) => {
     if ((target as HTMLElement).matches(".input-text")) return;
     setIsTyping(false);
-    ref.current!.blur();
-    blurInput(ref, formRef);
+
+    if (ref.current) {
+      ref.current.blur();
+      const focusRef = ref;
+      blurInput(focusRef, formRef);
+    }
   };
 
   useEffect(() => {
@@ -63,30 +65,19 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   }, [setFocus]);
 
   return (
-    <form className="form-container" onSubmit={handleSubmit} ref={formRef}>
-      <BiSearch className="search-icon" />
-      <div className="input-container">
-        <input
-          className="input-text"
-          placeholder="Add new todo..."
-          ref={ref}
-          value={inputText}
-          onChange={handleChange}
-          disabled={isLoading}
-        />
-      </div>
-      {isLoading && <ImSpinner8 className="spinner" />}
-      {isTyping && (
-        <SuggestList
-          suggestList={suggestList}
-          clickHandler={handleItemClick}
-          inputText={inputText}
-          isMore={isMore}
-          scrollHandler={handleScroll}
-          isScrolling={isScrolling}
-        />
-      )}
-    </form>
+    <InputTodoUI
+      isLoading={isLoading}
+      suggestList={suggestList}
+      isTyping={isTyping}
+      isScrolling={isScrolling}
+      formRef={formRef}
+      inputText={inputText}
+      isMore={isMore}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      handleItemClick={handleItemClick}
+      handleScroll={handleScroll}
+    />
   );
 };
 
