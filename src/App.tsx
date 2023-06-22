@@ -8,7 +8,14 @@ const App = () => {
   return (
     <SWRConfig
       value={{
-        fetcher: (url: string) => axios.get(url).then((res) => res.data),
+        fetcher: (url: string) =>
+          axios
+            .get(url, {
+              headers: {
+                Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`,
+              },
+            })
+            .then((res) => res.data),
       }}
     >
       <Main />

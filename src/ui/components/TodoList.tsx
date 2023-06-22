@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { TodoDto } from "../../infrastructure/TodoDto";
 
 const TodoList = () => {
-  const { data, error, isLoading } = useSWR<TodoDto[]>(
+  const { data, error, isLoading } = useSWR(
     process.env.REACT_APP_API_URL + "/todos"
   );
   if (error) {
@@ -14,10 +14,11 @@ const TodoList = () => {
   if (isLoading) {
     return <div>Loding...</div>;
   }
-  return data!.length ? (
+  const todos = data!.data as TodoDto[];
+  return todos.length ? (
     <ul>
-      {data!.map(({ id, title }) => (
-        <TodoItem key={id} id={id} title={title} setTodos={() => {}} />
+      {todos.map(({ id, title }) => (
+        <TodoItem key={id} id={id} title={title} />
       ))}
     </ul>
   ) : (
