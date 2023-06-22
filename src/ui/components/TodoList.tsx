@@ -1,17 +1,23 @@
 import React from "react";
 import { Todo } from "../../domain/Todo";
 import TodoItem from "./TodoItem";
+import useSWR from "swr";
+import { TodoDto } from "../../infrastructure/TodoDto";
 
-interface TodoListProps {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-}
-
-const TodoList = ({ todos, setTodos }: TodoListProps) => {
-  return todos.length ? (
+const TodoList = () => {
+  const { data, error, isLoading } = useSWR<TodoDto[]>(
+    process.env.REACT_APP_API_URL + "/todos"
+  );
+  if (error) {
+    return <div>failed to load...</div>;
+  }
+  if (isLoading) {
+    return <div>Loding...</div>;
+  }
+  return data!.length ? (
     <ul>
-      {todos.map(({ id, title }) => (
-        <TodoItem key={id} id={id} title={title} setTodos={setTodos} />
+      {data!.map(({ id, title }) => (
+        <TodoItem key={id} id={id} title={title} setTodos={() => {}} />
       ))}
     </ul>
   ) : (

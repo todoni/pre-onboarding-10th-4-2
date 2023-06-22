@@ -24,7 +24,7 @@ const Main = () => {
       <div className="inner">
         <Header />
         <TodoInput setTodos={setTodoListData} />
-        <TodoList todos={todoListData} setTodos={setTodoListData} />
+        <TodoList />
       </div>
     </div>
   );
