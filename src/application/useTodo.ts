@@ -8,10 +8,16 @@ const useTodo = () => {
 
   const createTodo = async (title: string): Promise<void> => {
     try {
-      const data = await repo.createTodo(title);
+      const trimmed = title.trim();
+      if (!trimmed) {
+        return alert("Please write something");
+      }
+      const newTitle = trimmed;
+      await repo.createTodo(newTitle);
       mutate(process.env.REACT_APP_API_URL + "/todos");
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      alert("Something went wrong.");
     }
   };
 

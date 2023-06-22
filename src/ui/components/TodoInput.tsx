@@ -2,7 +2,6 @@ import { FaPlusCircle, FaSpinner } from "react-icons/fa";
 import React, { useCallback, useEffect, useState } from "react";
 
 import useFocus from "../../application/useFocus";
-import { Todo } from "../../domain/Todo";
 import useTodo from "../../application/useTodo";
 
 const TodoInput = () => {
@@ -17,23 +16,11 @@ const TodoInput = () => {
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      try {
-        e.preventDefault();
-        setIsLoading(true);
-
-        const trimmed = inputText.trim();
-        if (!trimmed) {
-          return alert("Please write something");
-        }
-        const newTitle = trimmed;
-        await createTodo(newTitle, () => {});
-      } catch (error) {
-        console.error(error);
-        alert("Something went wrong.");
-      } finally {
-        setInputText("");
-        setIsLoading(false);
-      }
+      e.preventDefault();
+      setIsLoading(true);
+      await createTodo(inputText);
+      setInputText("");
+      setIsLoading(false);
     },
     [inputText, createTodo]
   );
