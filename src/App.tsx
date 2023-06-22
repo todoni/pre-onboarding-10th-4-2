@@ -8,6 +8,7 @@ const App = () => {
   return (
     <SWRConfig
       value={{
+        refreshInterval: 0,
         fetcher: (url: string) =>
           axios
             .get(url, {

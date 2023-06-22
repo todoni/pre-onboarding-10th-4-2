@@ -5,11 +5,7 @@ import useFocus from "../../application/useFocus";
 import { Todo } from "../../domain/Todo";
 import useTodo from "../../application/useTodo";
 
-interface TodoInputProps {
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-}
-
-const TodoInput = ({ setTodos }: TodoInputProps) => {
+const TodoInput = () => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { createTodo } = useTodo();
@@ -30,7 +26,7 @@ const TodoInput = ({ setTodos }: TodoInputProps) => {
           return alert("Please write something");
         }
         const newTitle = trimmed;
-        await createTodo(newTitle, setTodos);
+        await createTodo(newTitle, () => {});
       } catch (error) {
         console.error(error);
         alert("Something went wrong.");
@@ -39,7 +35,7 @@ const TodoInput = ({ setTodos }: TodoInputProps) => {
         setIsLoading(false);
       }
     },
-    [inputText, setTodos, createTodo]
+    [inputText, createTodo]
   );
 
   return (

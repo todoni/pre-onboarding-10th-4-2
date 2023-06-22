@@ -1,17 +1,15 @@
 import TodoRepository from "../infrastructure/TodoRepository";
 import { Todo } from "../domain/Todo";
 import React, { SetStateAction } from "react";
+import { mutate } from "swr";
 
 const useTodo = () => {
   const repo = TodoRepository;
 
-  const createTodo = async (
-    title: string,
-    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-  ): Promise<void> => {
+  const createTodo = async (title: string): Promise<void> => {
     try {
       const data = await repo.createTodo(title);
-      setTodos((prev) => [...prev, { id: data.id, title: data.title }]);
+      mutate(process.env.REACT_APP_API_URL + "/todos");
     } catch (error) {
       console.log(error);
     }
@@ -19,7 +17,6 @@ const useTodo = () => {
 
   const deleteTodo = async (
     id: string,
-    setTodos: React.Dispatch<SetStateAction<Todo[]>>,
     setIsLoading: React.Dispatch<SetStateAction<boolean>>,
     mounted: React.MutableRefObject<boolean>
   ): Promise<void> => {
@@ -27,7 +24,7 @@ const useTodo = () => {
       setIsLoading(true);
       await repo.deleteTodo(id);
       if (mounted.current) {
-        setTodos((prev) => prev.filter((item) => item.id !== id));
+        mutate(process.env.REACT_APP_API_URL + "/todos");
       }
     } catch (error) {
       console.log(error);
@@ -35,6 +32,7 @@ const useTodo = () => {
     } finally {
       if (mounted.current) {
         setIsLoading(false);
+        mutate(process.env.REACT_APP_API_URL + "/todos");
       }
     }
   };

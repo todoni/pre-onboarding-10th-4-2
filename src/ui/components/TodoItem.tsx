@@ -1,6 +1,5 @@
 import { FaSpinner, FaTrash } from "react-icons/fa";
 import React, { useCallback, useState, useEffect, useRef } from "react";
-import { Todo } from "../../domain/Todo";
 import useTodo from "../../application/useTodo";
 
 interface TodoItemProps {
@@ -10,7 +9,12 @@ interface TodoItemProps {
 
 const TodoItem = ({ id, title }: TodoItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { deleteTodo } = useTodo();
   const mounted = useRef(true);
+
+  const handleRemoveTodo = useCallback(async () => {
+    await deleteTodo(id, setIsLoading, mounted);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -23,7 +27,7 @@ const TodoItem = ({ id, title }: TodoItemProps) => {
       <span>{title}</span>
       <div className="item-option">
         {!isLoading ? (
-          <button>
+          <button onClick={handleRemoveTodo}>
             <FaTrash className="btn-trash" />
           </button>
         ) : (
