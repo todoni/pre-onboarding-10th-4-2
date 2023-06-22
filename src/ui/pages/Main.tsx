@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useTodo from "../../application/useTodo";
 
 import Header from "../components/Header";
-import InputTodo from "../components/InputTodo";
+import TodoInput from "../components/TodoInput";
 import TodoList from "../components/TodoList";
 import { Todo } from "../../domain/Todo";
 
@@ -23,7 +23,7 @@ const Main = () => {
     <div className="container">
       <div className="inner">
         <Header />
-        <InputTodo setTodos={setTodoListData} />
+        <TodoInput setTodos={setTodoListData} />
         <TodoList todos={todoListData} setTodos={setTodoListData} />
       </div>
     </div>

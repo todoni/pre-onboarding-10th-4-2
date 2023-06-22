@@ -5,11 +5,11 @@ import useFocus from "../../application/useFocus";
 import { Todo } from "../../domain/Todo";
 import useTodo from "../../application/useTodo";
 
-interface InputTodoProps {
+interface TodoInputProps {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
-const InputTodo = ({ setTodos }: InputTodoProps) => {
+const TodoInput = ({ setTodos }: TodoInputProps) => {
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { createTodo } = useTodo();
@@ -63,4 +63,4 @@ const InputTodo = ({ setTodos }: InputTodoProps) => {
   );
 };
 
-export default InputTodo;
+export default TodoInput;
