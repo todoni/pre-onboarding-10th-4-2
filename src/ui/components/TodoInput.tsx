@@ -17,10 +17,7 @@ const TodoInput = () => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      setIsLoading(true);
-      await createTodo(inputText);
-      setInputText("");
-      setIsLoading(false);
+      await createTodo(inputText, setIsLoading, setInputText);
     },
     [inputText, createTodo]
   );

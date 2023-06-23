@@ -1,13 +1,17 @@
 import TodoRepository from "../infrastructure/TodoRepository";
-import { Todo } from "../domain/Todo";
 import React, { SetStateAction } from "react";
 import { mutate } from "swr";
 
 const useTodo = () => {
   const repo = TodoRepository;
 
-  const createTodo = async (title: string): Promise<void> => {
+  const createTodo = async (
+    title: string,
+    setIsLoading: React.Dispatch<SetStateAction<boolean>>,
+    setInputText: React.Dispatch<SetStateAction<string>>
+  ): Promise<void> => {
     try {
+      setIsLoading(true);
       const trimmed = title.trim();
       if (!trimmed) {
         return alert("Please write something");
@@ -15,9 +19,14 @@ const useTodo = () => {
       const newTitle = trimmed;
       await repo.createTodo(newTitle);
       mutate(process.env.REACT_APP_API_URL + "/todos");
+      setInputText("");
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
+    } finally {
+      setIsLoading(false);
+      setInputText("");
+      mutate(process.env.REACT_APP_API_URL + "/todos");
     }
   };
 
