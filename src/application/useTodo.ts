@@ -52,7 +52,10 @@ const useTodo = () => {
     }
   };
 
-  const getTodoSearch = async (query: string, page: number): Promise<void> => {
+  const getTodoRecommendations = async (
+    query: string,
+    page: number
+  ): Promise<void> => {
     try {
       //const data = await repo.getTodoSearch(query, page);
       //보여지는 search list update
@@ -60,7 +63,7 @@ const useTodo = () => {
       console.log(error);
     }
   };
-  return { createTodo, deleteTodo, getTodoSearch };
+  return { createTodo, deleteTodo, getTodoRecommendations };
 };
 
 export default useTodo;
