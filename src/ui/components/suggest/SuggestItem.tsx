@@ -23,10 +23,9 @@ const SuggestItem = ({ index, content, currentQuery }: SuggestItemProps) => {
     await onCreateTodo(content);
   };
   return (
-    <li className="suggest-item" onClick={handleClickItem}>
-      {index}
+    <div className="suggest-item" onClick={handleClickItem}>
       {newText}
-    </li>
+    </div>
   );
 };
 
