@@ -24,16 +24,25 @@ interface TodoSuggestProviderProps {
 const TodoSuggestProvider = ({ children }: TodoSuggestProviderProps) => {
   const [suggestedTodos, setSuggestedTodos] = useState<string[]>([]);
   const [page, setPage] = useState(1);
+  const [currentQuery, setCurrentQuery] = useState("");
 
   const repo = todoRepository;
 
   const getSuggestedTodos = async (query: string, page: number) => {
     try {
+      if (query !== currentQuery) {
+        resetSuggestedTodos();
+        setCurrentQuery(query);
+      }
       if (query === "") {
         return;
       }
       const data = await repo.getTodoSearchList(query, page, 10);
-      setSuggestedTodos(prev => [...prev, ...data.result]);
+      if (page === 1) {
+        setSuggestedTodos(data.result);
+      } else {
+        setSuggestedTodos(prev => [...prev, ...data.result]);
+      }
     } catch (error) {
       console.error(error);
     }

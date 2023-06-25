@@ -7,12 +7,12 @@ import useFocus from "../../../application/useFocus";
 import SuggestList from "../suggest/SuggestList";
 import { blurInput } from "../../../utils";
 import { useTodo } from "../../../application/TodoProvider";
-import { useTodoSuggest } from "../../../application/TodoSuggestProvider";
+//import { useTodoSuggest } from "../../../application/TodoSuggestProvider";
 
 const InputTodo = () => {
   const [inputValue, setInputValue] = useState("");
   const { onCreateTodo } = useTodo();
-  const { resetSuggestedTodos } = useTodoSuggest();
+  //const { resetSuggestedTodos } = useTodoSuggest();
   //const [isTyping, setIsTyping] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -34,7 +34,7 @@ const InputTodo = () => {
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    resetSuggestedTodos();
+    //resetSuggestedTodos();
     setInputValue(event.target.value);
   };
 

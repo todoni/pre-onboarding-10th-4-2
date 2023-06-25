@@ -2,6 +2,7 @@ import "./SuggestList.css";
 import SuggestItem from "./SuggestItem";
 import { useEffect, useRef } from "react";
 import { useTodoSuggest } from "../../../application/TodoSuggestProvider";
+import useDebounce from "../../../application/useDebounce";
 
 interface SuggestListProps {
   currentQuery: string;
@@ -10,12 +11,13 @@ interface SuggestListProps {
 const SuggestList = ({ currentQuery }: SuggestListProps) => {
   const { suggestedTodos, getSuggestedTodos, page, setPage } = useTodoSuggest();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const debouncedCurrentQuery = useDebounce(currentQuery, 500);
 
   const isEmpty = suggestedTodos.length === 0;
 
   useEffect(() => {
-    getSuggestedTodos(currentQuery, page);
-  }, [currentQuery, page]);
+    getSuggestedTodos(debouncedCurrentQuery, page);
+  }, [debouncedCurrentQuery, page]);
 
   const onScroll = () => {
     if (
