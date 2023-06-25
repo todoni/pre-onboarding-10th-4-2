@@ -4,5 +4,5 @@ export interface ITodoRepository {
   getTodoList(): Promise<TodoDto[]>;
   createTodo(title: string): Promise<TodoDto>;
   deleteTodo(id: string): Promise<TodoDto>;
-  getTodoSearch(query: string, page: number): Promise<TodoSearchDto>;
+  getTodoSearchList(query: string, page: number, limit: number): Promise<TodoSearchDto>;
 }

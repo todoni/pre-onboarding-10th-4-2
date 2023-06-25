@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
-import useTodo from "../../application/useTodo";
-
-import Header from "../components/Header";
-import TodoInput from "../components/TodoInput";
-import TodoList from "../components/TodoList";
-import { Todo } from "../../domain/Todo";
+import { useEffect } from "react";
+import "./Main.css";
+import Header from "../components/common/Header";
+import InputTodo from "../components/todo/InputTodo";
+import TodoList from "../components/todo/TodoList";
+import { useTodo } from "../../application/TodoProvider";
 
 const Main = () => {
+  const { getTodos } = useTodo();
+  useEffect(() => {
+    (async () => {
+      await getTodos();
+    })();
+  }, []);
+
   return (
     <div className="container">
       <div className="inner">
         <Header />
-        <TodoInput />
+        <InputTodo />
         <TodoList />
       </div>
     </div>

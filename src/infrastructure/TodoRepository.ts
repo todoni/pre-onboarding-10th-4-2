@@ -1,6 +1,6 @@
 import { ITodoRepository } from "../domain/ITodoRepository";
 import { TodoDto, TodoSearchDto } from "./TodoDto";
-import apiRequest from "../api/index";
+import apiRequest from "../lib/AxiosIntance";
 
 const RESOURCE = "/todos";
 const SEARCH = "/search";
@@ -33,18 +33,18 @@ class TodoRepository implements ITodoRepository {
     }
   }
 
-  async getTodoSearch(query: string, page: number): Promise<TodoSearchDto> {
+  async getTodoSearchList(query: string, page: number, limit: number): Promise<TodoSearchDto> {
     try {
       const response = await apiRequest.get(`${SEARCH}`, {
         params: {
           q: query,
           page: page,
-          limit: 10,
+          limit: limit,
         },
       });
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw new Error("API getTodoSearch error");
     }
   }

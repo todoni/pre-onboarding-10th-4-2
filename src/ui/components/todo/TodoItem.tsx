@@ -1,29 +1,28 @@
+import React, { useState } from "react";
 import { FaSpinner, FaTrash } from "react-icons/fa";
-import React, { useCallback, useState, useEffect, useRef } from "react";
-import useTodo from "../../application/useTodo";
+import { MouseEvent, useCallback } from "react";
+import "./TodoItem.css";
+import { useTodo } from "../../../application/TodoProvider";
 
-interface TodoItemProps {
+type TodoItemProps = {
   id: string;
   title: string;
-}
+};
 
 const TodoItem = ({ id, title }: TodoItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { deleteTodo } = useTodo();
-  const mounted = useRef(true);
+  const { onDeleteTodo } = useTodo();
 
   const handleRemoveTodo = useCallback(async () => {
-    await deleteTodo(id, setIsLoading, mounted);
-  }, []);
+    await onDeleteTodo(id, setIsLoading);
+  }, [id, setIsLoading]);
 
-  useEffect(() => {
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
+  const clickHandler = (e: MouseEvent<HTMLElement>) => {
+    if (!(e.target as HTMLElement).closest(".item-option")) alert(title);
+  };
 
   return (
-    <li className="item">
+    <li className="item" onClick={clickHandler}>
       <span>{title}</span>
       <div className="item-option">
         {!isLoading ? (

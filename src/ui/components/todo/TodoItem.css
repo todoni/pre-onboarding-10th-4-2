@@ -1,0 +1,41 @@
+.btn-trash {
+  color: orangered;
+  font-size: 16px;
+}
+
+.btn-trash:hover {
+  opacity: 0.5;
+}
+
+.item {
+  list-style-type: none;
+  width: 364px;
+  padding: 17px 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 1.2rem;
+  letter-spacing: 1.5px;
+  margin: 0 auto;
+}
+.item:hover {
+  opacity: 0.85;
+  background-color: #eaeaea;
+  cursor: pointer;
+}
+
+.item span {
+  display: inline-block;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-option {
+  float: right;
+}
+
+.item-option button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
